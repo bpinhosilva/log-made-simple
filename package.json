@@ -1,0 +1,26 @@
+{
+  "name": "log-made-simple",
+  "version": "1.0.0",
+  "description": "Simple log for Node.JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bpinhosilva/log-made-simple.git"
+  },
+  "keywords": [
+    "log"
+  ],
+  "author": "Bruno Sampaio Pinho da Silva",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bpinhosilva/log-made-simple/issues"
+  },
+  "homepage": "https://github.com/bpinhosilva/log-made-simple#readme",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "moment": "^2.13.0"
+  }
+}
