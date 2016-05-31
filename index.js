@@ -1,0 +1,93 @@
+/**
+* Created by Bruno Sampaio Pinho da Silva
+* On May 31st, 2016
+*/
+
+"use strict";
+
+var fs = require('fs');
+var colors = require('colors');
+var moment = require('moment');
+const Console = require('console').Console;
+
+var LogMadeSimple = function () {
+  var self = this;
+
+  self.label = "";
+  self.outputFile = true;
+  self.debugMode = true;
+  self.initTime = moment();
+
+
+  var output = fs.createWriteStream('./stdout.' + moment().format('MMMM-Do-YYYY') + '.log', { labels: 'a' });
+  var logger = new Console(output);  
+
+  // change file name after midnight
+  var updateLogFile = function () {
+    fs.close(output.fd);
+    output = fs.createWriteStream('./stdout.' + moment().format('MMMM-Do-YYYY') + '.log', { labels: 'a' });
+    logger = new Console(output);      
+  }
+
+  // check if it's another day
+  var checkNewDay = function () {
+    if (moment().isAfter(self.initTime, 'day') ) {
+      self.initTime = moment();
+      setTimeout(updateLogFile, 500);
+    }
+  };  
+
+  return {
+    setLabel: function (label) {
+      if (!label) 
+        self.label = "";
+      else 
+        self.label = label;
+    },
+    setDebugMode: function (d) {
+      if (typeof d == 'undefined') self.debugMode = false;
+      else {
+        self.debugMode = d;
+      }
+    },
+    setOutputFile: function (d) {
+      if (typeof d == 'undefined') self.outputFile = false;
+      else {
+        self.outputFile = d;
+      }
+    },
+    info: function (msg) {
+      if (self.outputFile)
+        logger.log("[INFO] " + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg);
+      if (self.debugMode)
+        console.log("[INFO] ".bold.green + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg);
+      checkNewDay();
+    },
+    warn: function (msg) {
+      if (self.outputFile)
+        logger.log("[WARNING] " + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg);
+      if (self.debugMode)
+        console.log("[WARNING] ".bold.magenta + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg);
+      checkNewDay();
+    },
+    error: function (msg) {
+      if (self.outputFile)
+        logger.log("[ERROR] " + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg);
+      if (self.debugMode)
+      console.log("[ERROR] ".bold.red + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg);
+      checkNewDay();
+    },
+    debug: function (msg) {
+      if (self.outputFile)
+        logger.log("[DEBUG] " + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg);
+      if (self.debugMode)
+        console.log("[DEBUG] ".bold.cyan + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg);
+      checkNewDay();
+    }
+  };
+};
+
+
+var logSimple = new LogMadeSimple();
+
+module.exports = logSimple;
