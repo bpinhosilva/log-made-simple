@@ -56,33 +56,38 @@ var LogMadeSimple = function () {
         self.outputFile = d;
       }
     },
-    info: function (msg) {
+    info: function (msg, ...params) {
+      checkNewDay();
+      
       if (self.outputFile)
-        logger.log("[INFO] " + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg);
+        logger.log("[INFO] " + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg, ...params);
       if (self.debugMode)
-        console.log("[INFO] ".bold.green + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg);
+        console.log("[INFO] ".bold.green + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg, ...params);      
+    },
+    warn: function (msg, ...params) {
+      checkNewDay();      
+      
+      if (self.outputFile)
+        logger.log("[WARNING] " + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg, ...params);
+      if (self.debugMode)
+        console.log("[WARNING] ".bold.magenta + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg, ...params);
       checkNewDay();
     },
-    warn: function (msg) {
-      if (self.outputFile)
-        logger.log("[WARNING] " + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg);
-      if (self.debugMode)
-        console.log("[WARNING] ".bold.magenta + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg);
+    error: function (msg, ...params) {
       checkNewDay();
+      
+      if (self.outputFile)
+        logger.log("[ERROR] " + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg, ...params);
+      if (self.debugMode)
+      console.log("[ERROR] ".bold.red + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg, ...params);
     },
-    error: function (msg) {
-      if (self.outputFile)
-        logger.log("[ERROR] " + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg);
-      if (self.debugMode)
-      console.log("[ERROR] ".bold.red + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg);
+    debug: function (msg, ...params) {
       checkNewDay();
-    },
-    debug: function (msg) {
+      
       if (self.outputFile)
-        logger.log("[DEBUG] " + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg);
+        logger.log("[DEBUG] " + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg, ...params);
       if (self.debugMode)
-        console.log("[DEBUG] ".bold.cyan + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg);
-      checkNewDay();
+        console.log("[DEBUG] ".bold.cyan + (self.label != "" ? "[" + self.label + "] " : "") + moment().format("MMMM Do YYYY, h:mm:ss a") + ': ' + msg, ...params);
     }
   };
 };
