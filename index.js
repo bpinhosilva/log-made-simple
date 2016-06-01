@@ -19,13 +19,13 @@ var LogMadeSimple = function () {
   self.initTime = moment();
 
 
-  var output = fs.createWriteStream('./stdout.' + moment().format('MMMM-Do-YYYY') + '.log', { labels: 'a' });
+  var output = fs.createWriteStream('./stdout.' + moment().format('MMMM-Do-YYYY') + '.log', { flags: 'a' });
   var logger = new Console(output);  
 
   // change file name after midnight
   var updateLogFile = function () {
     fs.close(output.fd);
-    output = fs.createWriteStream('./stdout.' + moment().format('MMMM-Do-YYYY') + '.log', { labels: 'a' });
+    output = fs.createWriteStream('./stdout.' + moment().format('MMMM-Do-YYYY') + '.log', { flags: 'a' });
     logger = new Console(output);      
   }
 
