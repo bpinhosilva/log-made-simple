@@ -48,7 +48,12 @@ If you do not want to log messages to your terminal, set it to false (default tr
 
 ### Changelog
 
-Version 1.0.0 (May. 31st, 2016)
+Version 1.0.1 (June 1st, 2016)
+* Added printf format string style to logger;
+* Fixed flag options when creating stream.
+
+
+Version 1.0.0 (May 31st, 2016)
 * First release with basic usage.
 
 
