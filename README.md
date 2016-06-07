@@ -48,6 +48,9 @@ If you do not want to log messages to your terminal, set it to false (default tr
 
 ### Changelog
 
+Version 1.1.1 (June 7th, 2016)
+* Added compatibility mode for Node.js versions under 6 (rest parameters are only available on >6).
+
 Version 1.0.1 (June 1st, 2016)
 * Added printf format string style to logger;
 * Fixed flag options when creating stream.
